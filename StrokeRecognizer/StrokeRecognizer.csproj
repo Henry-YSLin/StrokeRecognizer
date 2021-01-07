@@ -59,6 +59,9 @@
     <Compile Include="StrokePatternIndices\CenterOfMassX.cs" />
     <Compile Include="StrokePatternIndices\CenterOfMassY.cs" />
     <Compile Include="StrokePatternIndices\IntersectionCount.cs" />
+    <Compile Include="StrokePatternIndices\AngleSum.cs" />
+    <Compile Include="StrokePatternIndices\StartPosCenterDistY.cs" />
+    <Compile Include="StrokePatternIndices\StartPosCenterDistX.cs" />
     <Compile Include="StrokePatternIndices\TopBottomRatio.cs" />
     <Compile Include="StrokePatternIndices\LeftRightRatio.cs" />
     <Compile Include="StrokePatternIndices\PointsCount.cs" />
