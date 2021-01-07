@@ -1,0 +1,215 @@
+﻿<Window
+    x:Class="StrokeRecognizerUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:StrokeRecognizerUI"
+    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+    mc:Ignorable="d"
+    Title="Stroke Recognizer UI"
+    Height="450"
+    Width="800"
+    Background="Silver"
+    WindowState="Maximized"
+    SourceInitialized="Window_SourceInitialized"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Orientation="Horizontal">
+                <CheckBox
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Content="Training mode"
+                    IsChecked="{Binding TrainingMode}">
+                </CheckBox>
+                <Button
+                    Name="btnSave"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Click="btnSave_Click"
+                    ToolTip="Save training data into a json file">
+                    Save
+                </Button>
+                <Button
+                    Name="btnLoad"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Click="btnLoad_Click"
+                    ToolTip="Load and overwrite current training data">
+                    Load
+                </Button>
+                <Button
+                    Name="btnRecompute"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Click="btnRecompute_Click"
+                    ToolTip="This is executed automatically when the recognzier is first used after training">
+                    Recompute statistics
+                </Button>
+            </StackPanel>
+            <InkCanvas
+                Grid.Row="1"
+                Name="inkCanvas"
+                UseCustomCursor="True"
+                Cursor="Pen"
+                Background="White"
+                EditingMode="Ink"
+                StrokeCollected="inkCanvas_StrokeCollected">
+                <InkCanvas.DefaultDrawingAttributes>
+                    <DrawingAttributes
+                        Color="Black"
+                        FitToCurve="False"
+                        Width="1"
+                        Height="1" />
+                </InkCanvas.DefaultDrawingAttributes>
+            </InkCanvas>
+        </Grid>
+        <Grid
+            Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Orientation="Horizontal">
+                <Button
+                    Name="btnRemoveLast"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Click="btnRemoveLast_Click"
+                    ToolTip="Remove last sample of the selected pattern">
+                    Remove last
+                </Button>
+                <Button
+                    Name="btnShowDetails"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Click="btnShowDetails_Click"
+                    ToolTip="Show detailed statistics for each pattern">
+                    Show details
+                </Button>
+            </StackPanel>
+            <ListBox
+                Name="listBox"
+                Grid.Row="1"
+                ItemsSource="{Binding PatternInfos}"
+                SelectedItem="{Binding SelectedPattern}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <InkCanvas
+                                Width="100"
+                                Height="100"
+                                UseCustomCursor="True"
+                                Cursor="Arrow"
+                                Background="White"
+                                EditingMode="None"
+                                Strokes="{Binding StrokeCollection}">
+                                <InkCanvas.DefaultDrawingAttributes>
+                                    <DrawingAttributes
+                                        FitToCurve="False"
+                                        Width="1"
+                                        Height="1">
+                                        <DrawingAttributes.Color>
+                                            <Color
+                                                A="100"
+                                                R="0"
+                                                G="0"
+                                                B="0" />
+                                        </DrawingAttributes.Color>
+                                    </DrawingAttributes>
+                                </InkCanvas.DefaultDrawingAttributes>
+                            </InkCanvas>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding
+                                        StringFormat="{}{0} - {1}{2}">
+                                        <Binding
+                                            Path="StrokePattern.PatternName" />
+                                        <Binding
+                                            Path="StrokePattern.SampleStrokes.Count" />
+                                        <Binding
+                                            Path="StatsString" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid
+            Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                HorizontalAlignment="Stretch"
+                Margin="5"
+                Text="{Binding IndicesStats}">
+            </TextBlock>
+            <ItemsControl
+                HorizontalAlignment="Stretch"
+                Name="listBoxIndices"
+                Grid.Row="1"
+                ItemsSource="{Binding IndexInfos}">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer
+                            x:Name="ScrollViewer"
+                            Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Text="{Binding StrokePatternIndex.Name}" />
+                            <lvc:CartesianChart
+                                HorizontalAlignment="Stretch"
+                                Height="300"
+                                Width="250"
+                                Series="{Binding SeriesCollection}">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis
+                                        Labels="{Binding Labels}" />
+                                </lvc:CartesianChart.AxisX>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</Window>

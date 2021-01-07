@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeRecognizerUI", "StrokeRecognizerUI\StrokeRecognizerUI.csproj", "{97F6658B-40AE-4B68-9A14-8A956E2764E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrokeRecognizer", "StrokeRecognizer\StrokeRecognizer.csproj", "{A95FEB54-7806-44C3-B23B-F35729BE42AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97F6658B-40AE-4B68-9A14-8A956E2764E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F6658B-40AE-4B68-9A14-8A956E2764E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F6658B-40AE-4B68-9A14-8A956E2764E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F6658B-40AE-4B68-9A14-8A956E2764E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95FEB54-7806-44C3-B23B-F35729BE42AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95FEB54-7806-44C3-B23B-F35729BE42AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95FEB54-7806-44C3-B23B-F35729BE42AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95FEB54-7806-44C3-B23B-F35729BE42AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DC12B1F-DF04-4C3F-9666-0E17FA2F2C2A}
+	EndGlobalSection
+EndGlobal
